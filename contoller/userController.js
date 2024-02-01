@@ -65,5 +65,16 @@ module.exports={
             data:token
            })
      
-    }   
+    },
+    productList : async (req,res)=>{
+        const product = await product.find();
+        if(product.length === 0){
+           return res.status(400).json({message:"no product"})
+        }
+        res.status(201).json({
+            status:"success",
+            message:"successfully listed",
+            product
+        })
+    }
 }
