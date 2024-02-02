@@ -10,6 +10,8 @@ const uploade = multer({ storage: storage });
 const cloudinary = require("../untils/cloudinary");
 
 const upload = (req, res, next) => {
+
+  
   uploade.single("image")(req, res, async (err) => {
     if (err) {
       return res.status(400).json({ message: err.message });
@@ -21,6 +23,9 @@ const upload = (req, res, next) => {
     try {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "product-images",      });
+         
+       
+        
 
       req.body.image = result.secure_url;
       next();

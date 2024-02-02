@@ -10,7 +10,7 @@ adminRoute.get("/users",trycatch(adminController.getAllUsres))
 adminRoute.get("/users/:id",trycatch(adminController.getUsersbyId))
 adminRoute.post("/products",upload,trycatch(adminController.createProduct))
 adminRoute.get("/products",trycatch(adminController.getAllProduct))
-adminRoute.get("/products/category",trycatch(adminController.getProductById))
+adminRoute.get("/products/category/:categoryname",trycatch(adminController.getProductsByCatogory))
 adminRoute.get("/products/:id",trycatch(adminController.getProductById))
 
 

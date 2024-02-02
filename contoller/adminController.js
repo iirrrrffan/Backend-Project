@@ -58,11 +58,8 @@ module.exports = {
 
         // create product----
         createProduct : async (req,res)=>{
-            // const {value,error} = joiProductSchema.validate(req.body);
             const {title,description,price,image,category} = req.body ;
-            // if(error){
-            //     res.json(error.message)
-            // }
+          
             const data = await Product.create ({
                 title ,
                 description,
@@ -70,7 +67,9 @@ module.exports = {
                 image,
                 category,
              });
-   
+           
+
+           
              res.status(201).json({
                 status : "success",
                 message : "product successfully created",
@@ -78,28 +77,42 @@ module.exports = {
              })
     
           },
-          //take product----
+          //take all product----
           getAllProduct : async(req, res)=>{
             const getAllProduct = await  Product.find();
             res.status(201).json({
               status : "success",
-              message: "succesfully fetch product",
+              message: "succesfully fetch product",   
               data : getAllProduct
             })
           },
+
+
+
+
           getProductsByCatogory: async (req, res) => {
-            const categ = req.query.name;
-          
-            const products = await Product.find({ category: categ });
-            if (!products) {
-              return res.status(404).json({ error: "Category not found" });
+            const productCategory=req.params.categoryname   
+            try {  
+                   const Products = await Product.find({category:productCategory});      
+                  if (!Products.length) {
+                    return res.status(404).json({   
+                      status: 'error',
+                      message: 'No products found in the specified category',
+                    });
+                }
+                res.status(200).json({
+                    status: 'success',
+                    message: 'Product Category Fetched ✅',
+                    data: Products,
+                });
+            } catch (error) {
+                console.error('Error fetching products by category:', error);
+                res.status(500).json({
+                  status: 'error',
+                  message: 'Internal Server Error',
+                })
             }
-            res.status(200).json({
-              status: "success",
-              message: "Successfully fetched product details.",
-              data: products,
-            });
-          },
+            },
           
 
       getProductById: async (req, res) => {
@@ -113,5 +126,30 @@ module.exports = {
           message: "Successfully fetched product details.",
           data: product,
         });
+      },
+      // sample-------
+      getProductByTitle: async (req,res)=>{
+        const productTitle = req.params.titlename
+        try{
+          const titles=await Product.find({title:productTitle})
+          if(!titles.length){
+            return res.status(407).json({
+              status:"erroe",
+              message:"somthing problem"
+            })
+          }
+          res.status(200).json({
+            status: 'success',
+            message: 'Product Category Fetched ✅',
+            data: titles,
+        });
+
+        }catch(error){
+          console.error('Error fetching products by category:', error);
+          res.status(500).json({
+            status: 'error',
+            message: 'Internal Server Error',
+          })
+        }
       }
 }
