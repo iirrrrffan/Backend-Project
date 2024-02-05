@@ -118,5 +118,30 @@ module.exports={
           status:'success',
           message : "product succesfully added to cart"
         })
+      },
+
+      
+    deleteFromCart : async (req,res)=>{
+      const userId = req.params.id;
+      const productId = req.body.productId;
+      await Users.updateOne({_id : userId},{$pull:{cart : productId}})
+      res.status(201).json({
+        status : "success",
+        message :"product removed from the cart",
+        
+      })
+    },
+    showCart: async (req, res) => {
+      const userId = req.params.id;
+      const cart = await Users.findOne({ _id: userId }).populate("cart");
+      console.log(cart)
+      if (!cart) {
+        return res.status(404).json({ error: "Nothing to show on Cart" });
       }
+      res.status(200).json({
+        status: "success",
+        message: "Successfully fetched cart details.",
+        data:cart,
+      });
+    }
 }

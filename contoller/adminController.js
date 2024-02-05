@@ -126,30 +126,5 @@ module.exports = {
           message: "Successfully fetched product details.",
           data: product,
         });
-      },
-      // sample-------
-      getProductByTitle: async (req,res)=>{
-        const productTitle = req.params.titlename
-        try{
-          const titles=await Product.find({title:productTitle})
-          if(!titles.length){
-            return res.status(407).json({
-              status:"erroe",
-              message:"somthing problem"
-            })
-          }
-          res.status(200).json({
-            status: 'success',
-            message: 'Product Category Fetched ✅',
-            data: titles,
-        });
-
-        }catch(error){
-          console.error('Error fetching products by category:', error);
-          res.status(500).json({
-            status: 'error',
-            message: 'Internal Server Error',
-          })
-        }
       }
 }

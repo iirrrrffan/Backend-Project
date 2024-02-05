@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt')
 const userSchema = new mongoose.Schema({
     name : String,
     email :String,
-    username: String,
+    username: String,   
     password : String,
-    cart : [{type : mongoose.Schema.ObjectId,ref : "products"}],
-    wishLisit : [{type : mongoose.Schema.ObjectId,ref : "products"}],
+    cart : [{type : mongoose.Schema.ObjectId,ref : "product"}],
+    wishLisit : [{type : mongoose.Schema.ObjectId,ref : "product"}],
     orders : [],
     
 })
