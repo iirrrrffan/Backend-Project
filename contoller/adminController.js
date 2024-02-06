@@ -9,7 +9,7 @@ module.exports = {
         if(
             username === process.env.ADMIN_USERNAME &&
             password === process.env.ADMIN_PASSWORD
-
+            
             ){
                 const token = jwt.sign(
                     {username:user.username},
@@ -44,7 +44,7 @@ module.exports = {
             const userId = req.params.id
            const  usersbyId = await user.findById(userId)
            if(!usersbyId){
-            res.status(400).json({
+            res.status(400).json({   
                 status:"error",
                 message:"not an user"
             })
@@ -88,8 +88,6 @@ module.exports = {
           },
 
 
-
-
           getProductsByCatogory: async (req, res) => {
             const productCategory=req.params.categoryname   
             try {  
@@ -113,7 +111,6 @@ module.exports = {
                 })
             }
             },
-          
 
       getProductById: async (req, res) => {
         const productId = req.params.id;

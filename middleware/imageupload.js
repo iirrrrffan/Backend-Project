@@ -23,9 +23,6 @@ const upload = (req, res, next) => {
     try {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "product-images",      });
-         
-       
-        
 
       req.body.image = result.secure_url;
       next();

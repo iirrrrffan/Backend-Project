@@ -7,5 +7,4 @@ const joiUserSchema=joi.object({
 
 })
 
-
 module.exports={joiUserSchema}

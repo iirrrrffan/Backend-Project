@@ -4,7 +4,6 @@ const trycatchmiddleware = (trycatchhandler) => {
         await trycatchhandler(req, res, next);
       } catch (error) {
         next(error);
-   
       }
     };
   };

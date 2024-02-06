@@ -18,7 +18,6 @@ module.exports={
             status:"success",
             message:"user registration is success"
         })
-
     },
     
     // Login--
@@ -55,7 +54,6 @@ module.exports={
             {usernam:user.username},
             process.env.USER_ACCESS_TOKEN_SECRET,
             {expiresIn: 86400}
-
         )
            res.status(200).json({
             status:"success",
@@ -143,5 +141,20 @@ module.exports={
         message: "Successfully fetched cart details.",
         data:cart,
       });
-    }
+    },
+
+    wishList : async (req,res)=>{
+      const userId = req.params.id;
+      const productId = req.body.productId;
+      console.log(productId);
+      await User.updateOne(
+        {_id : userId},
+        {$addToSet:{wishList : productId}}
+      )
+
+      res.status(201).json({
+        status :"success",
+        message : "product added to wish list "
+      })
+    },
 }
