@@ -11,6 +11,9 @@ adminRoute.post("/products",upload,trycatch(adminController.createProduct))
 adminRoute.get("/products",trycatch(adminController.getAllProduct)) 
 adminRoute.get("/products/category/:categoryname",trycatch(adminController.getProductsByCatogory))
 adminRoute.get("/products/:id",trycatch(adminController.getProductById))
+// -----------------------------------------------------------
+adminRoute.put("/products",trycatch(adminController.updateProduct))
+adminRoute.delete("/products",trycatch(adminController.deleteProduct))
 
 
 

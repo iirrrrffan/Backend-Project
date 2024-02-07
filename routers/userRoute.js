@@ -13,7 +13,11 @@ const userController=require("../contoller/userController")
  userRouter.post("/:id/cart",varifyTocken,trycatch(userController.addToCart)) 
 userRouter.delete("/:id/cart",varifyTocken,trycatch(userController.deleteFromCart))
 userRouter.get("/:id/cart",varifyTocken,trycatch(userController.showCart))
+// -----------------------------------------
 userRouter.post("/:id/wishList",varifyTocken,trycatch(userController.wishList))
+userRouter.get("/:id/wishList",varifyTocken,trycatch(userController.showWishList))
+userRouter.delete("/:id/wishList",varifyTocken,trycatch(userController.deleteWishList))
+ 
 
 
  module.exports=userRouter; 

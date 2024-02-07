@@ -147,7 +147,7 @@ module.exports={
       const userId = req.params.id;
       const productId = req.body.productId;
       console.log(productId);
-      await User.updateOne(
+      await Users.updateOne(
         {_id : userId},
         {$addToSet:{wishList : productId}}
       )
@@ -157,4 +157,28 @@ module.exports={
         message : "product added to wish list "
       })
     },
+
+    showWishList : async (req,res)=>{
+      const userId = req.params.id;
+      const wishList = await User.find({_id:userId}).populate('wishList');
+      
+
+      if(!wishList){res.status(404).json({error : "nothing to show in wish list"})}
+      res.status(201).json({
+        status : "success",
+        message : "products in wish list ",
+        data : wishList
+      })
+    },
+
+    deleteWishList : async (req,res)=>{
+      const userId = req.params.id;
+      const productId = req.body.productId;
+      await Users.updateOne({_id :userId},{$pull:{wishList:productId}})
+
+      res.status(201).json({
+        status : "success",
+        message : "wish list data deleted"
+      })
+   }
 }

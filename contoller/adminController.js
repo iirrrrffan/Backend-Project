@@ -123,5 +123,40 @@ module.exports = {
           message: "Successfully fetched product details.",
           data: product,
         });
-      }
+      },
+      
+      updateProduct: async (req, res) => {
+        const { title, description, image, price, category, id } = req.body;
+        const product = await Product.findById(id);
+        if (!product) {
+          return res.status(404).json({ error: "Product not found" });
+        }
+        await Product.updateOne(
+          { _id: id },
+          {
+            $set: {
+              title: title,
+              description: description,
+              price: price,
+              image: image,
+              category: category,
+            },
+          }
+        );
+        res.status(201).json({
+          status: "success",
+          message: "Successfully updated the product.",
+        });
+      },
+
+      deleteProduct : async (req,res)=>{
+        const {id} = req.body;
+        await Product.findByIdAndDelete(id);
+        res.status(201).json({
+          status:"success",
+          message : "product succesfully deleted"
+        })        
+      },
+
+      
 }
