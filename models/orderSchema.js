@@ -8,7 +8,7 @@ const orderSchema = mongoose.Schema({
     order_id:String,
     payment_id:String,
     total_amount:Number,
-
+    
 })
 
 

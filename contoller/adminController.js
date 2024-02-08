@@ -1,10 +1,16 @@
+
 const user = require("../models/userSchema")
 const jwt = require("jsonwebtoken")
 const Product = require("../models/productSchema")
+// ------------------ 
+const orderSchema = require("../models/orderSchema")
+const mongoose  = require("mongoose")
+const {joiProductSchema} = require("../models/validationSchema")
+
 
 
 module.exports = {
-    login:async (req,res)=>{
+    login:async (req,res)=>{ 
         const {username,password} = req.body;
         if(
             username === process.env.ADMIN_USERNAME &&
@@ -37,7 +43,6 @@ module.exports = {
                 message:"successfully fetched users",
                 data: allUsers
             })
-           
         },
 
         getUsersbyId: async(req,res)=>{
@@ -55,7 +60,7 @@ module.exports = {
             data:usersbyId
            })
         },
-
+        
         // create product----
         createProduct : async (req,res)=>{
             const {title,description,price,image,category} = req.body ;
@@ -75,8 +80,8 @@ module.exports = {
                 message : "product successfully created",
                 data:data
              })
-    
           },
+
           //take all product----
           getAllProduct : async(req, res)=>{
             const getAllProduct = await  Product.find();
@@ -86,7 +91,6 @@ module.exports = {
               data : getAllProduct
             })
           },
-
 
           getProductsByCatogory: async (req, res) => {
             const productCategory=req.params.categoryname   
@@ -157,6 +161,33 @@ module.exports = {
           message : "product succesfully deleted"
         })        
       },
+      orderDetails : async (req,res)=>{
+        const order = await orderSchema.find();
+        console.log(order);
+        if(order.length === 0){
+          res.status(404).json({message :'no orders yet' })
+        }
 
-      
+        res.status(201).json({status : "success",message : "oreder successfully fetched",data : order})
+      },
+
+      stats : async (req,res) => {
+        const order = await orderSchema.find();
+
+        const data = await orderSchema.aggregate([
+          {
+            $group:{
+              _id : null ,
+              totalProductPurchaced :{$sum:{$size:"$products"}},
+              revenu: {$sum:"$total_amount"},
+            },
+          },
+          {$project:{_id : 0}}
+        ])
+
+        res.json({data})
+
+
+      }
+       
 }
