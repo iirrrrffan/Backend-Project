@@ -17,7 +17,7 @@ userRouter.get("/:id/cart",varifyTocken,trycatch(userController.showCart))
 userRouter.post("/:id/wishList",varifyTocken,trycatch(userController.wishList))
 userRouter.get("/:id/wishList",varifyTocken,trycatch(userController.showWishList))
 userRouter.delete("/:id/wishList",varifyTocken,trycatch(userController.deleteWishList))
- 
+userRouter.post("/:id/payment",varifyTocken,trycatch(userController.payment))
 
 
  module.exports=userRouter; 
