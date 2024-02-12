@@ -3,7 +3,13 @@ const {joiUserSchema}=require("../models/validationSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const Product = require("../models/productSchema")
+// --------------------------------------------------------------
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_key);
+const userSchema = require("../models/userSchema")
+const orderSchema = require("../models/orderSchema")
+const mongoose = require("mongoose")
+
+
 module.exports={
     createUser:async(req,res)=>{
         const {name,username,email,password}=req.body;
@@ -206,7 +212,7 @@ module.exports={
         quantity: 1,
       };
     });
-    session = await Stripe.checkout.sessions.create({
+    session = await Stripe .checkout.sessions.create({
       payment_method_types: ["card"], //, 'apple_pay', 'google_pay', 'alipay',card
       line_items: lineItems,
       mode: "payment",
@@ -252,13 +258,14 @@ module.exports={
           payment_id: `demo ${Date.now()}`,
           total_amount: session.amount_total / 100,
       })
+      console.log(order,"dh");            
 
       if(!order){
         res.status(403).json({message : "error include while inputing orderschema"})
       }
       const orderId = order._id;
 
-      const updateUser = await User.updateOne(
+      const updateUser = await Users.updateOne(
         {_id : id},
         {
           $push:{orders :orderId },

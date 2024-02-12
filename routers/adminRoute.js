@@ -14,7 +14,7 @@ adminRoute.get("/products/:id",trycatch(adminController.getProductById))
 // -----------------------------------------------------------
 adminRoute.put("/products",trycatch(adminController.updateProduct))
 adminRoute.delete("/products",trycatch(adminController.deleteProduct))
-
-
+adminRoute.get('/order',trycatch(adminController.orderDetails))
+adminRoute.get('/stats',trycatch(adminController.stats))    
 
 module.exports = adminRoute

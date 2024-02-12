@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema({
     username: String,   
     password : String,
     cart : [{type : mongoose.Schema.ObjectId,ref : "product"}],
-    wishList: [{ type:mongoose.Schema.ObjectId, ref: 'product' }] 
-   
+    wishList: [{ type:mongoose.Schema.ObjectId, ref: 'product' }] ,
+   orders : []
     
 })
 
