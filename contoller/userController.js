@@ -207,17 +207,17 @@ module.exports={
             name: item.title,
             description: item.description,
           },
-          unit_amount: Math.round(item.price * 100), // when item.price only given ,error occur, why ? check its reason . why multiply 100
+          unit_amount: Math.round(item.price * 100), 
         },
         quantity: 1,
       };
     });
     session = await Stripe .checkout.sessions.create({
-      payment_method_types: ["card"], //, 'apple_pay', 'google_pay', 'alipay',card
+      payment_method_types: ["card"], //steripe session -----
       line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:3003/api/users/payment/success`, // Replace with your success URL
-      cancel_url: "http://localhost:3003/api/users/payment/cancel", // Replace with your cancel URL
+      success_url: `http://localhost:3003/api/users/payment/success`, //success route
+      cancel_url: "http://localhost:3003/api/users/payment/cancel", //cancel route
     });
 
     if (!session) {
@@ -289,7 +289,7 @@ module.exports={
       const id = req.params.id;
       const user = await userSchema.findById(id).populate("orders");
       if (!user) {
-        return res
+        return res 
           .status(404)
           .json({ status: "Failure", message: "User not found." });
       }
