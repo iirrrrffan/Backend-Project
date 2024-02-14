@@ -101,7 +101,6 @@ module.exports={
 
       ProductByCategory: async (req, res) => {
         const Category = req.params.categoryname;
-        console.log(Category)
         const products = await Product.find({ category: Category });
         if (!products) {
           return res.status(404).json({ error: "Category not found" });
